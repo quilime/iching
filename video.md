@@ -4,7 +4,7 @@ title: Video
 ---
 
 <video id="video" autobuffer height="240" width="360">
-<source src="http://mirror.cessen.com/blender.org/peach/trailer/trailer_iphone.m4v">
+<source src="https://www.html5rocks.com/en/tutorials/video/basics/devstories.webm">
 </video>
 
 <button id="play">Play</button>
