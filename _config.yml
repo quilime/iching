@@ -1,6 +1,6 @@
 title: iChing
 description: Interactive iChing
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/iching" # the subpath of your site, e.g. /blog
 url: "https://quilime.github.io/iching" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
