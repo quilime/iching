@@ -4,7 +4,7 @@ title: Video
 ---
 
 <video id="video" autobuffer height="240" width="360">
-<source src="https://www.html5rocks.com/en/tutorials/video/basics/devstories.webm">
+<source src="https://i.imgur.com/l6WMqqC.mp4">
 </video>
 
 <button id="play">Play</button>
