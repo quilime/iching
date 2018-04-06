@@ -1,0 +1,41 @@
+body {
+  background: #222;
+  color: #ddd;
+  font-size:18px;
+  font-family:sans-serif;
+  margin: 0 auto;
+  max-width:1000px;
+  text-align:center;
+}
+
+a {
+  color:#fff;
+}
+
+
+table {
+  width:100%;
+  max-width:600px;
+  margin:0 auto;
+}
+
+input, button {
+  font-size:24px;
+}
+
+#hexagram_table td {
+  border: 1px solid #fff;
+  height:300px;
+  padding:1em;
+}
+
+.page {
+  position:absolute;
+  width:500px;
+  display:none;
+}
+.page .content {
+  width:500px;
+  height:500px;
+  margin:0 auto;
+}
