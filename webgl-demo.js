@@ -64,7 +64,7 @@ precision mediump float;
 
 // uniform vec2 u_resolution;
 // uniform vec2 u_mouse;
-uniform float u_time;
+// uniform float u_time;
 
 vec2 u_resolution = vec2(500, 500);
 vec2 u_mouse = vec2(0,0);
