@@ -3,23 +3,15 @@ layout: default
 title: Home
 ---
 
-<!-- 
-add cool graphic -- lava lamp inspiration
-make a video with touchdesigner
-export as mp4
- -->
-
- <a href="shader.html">Shader.html</A>
-
-
 <!-- ATTRACT LOOP -->
 <div id="home" class="page">
   <div class="content">
-    <video loop id="video" autobuffer height="500" width="500">
-      <source src="https://i.imgur.com/l6WMqqC.mp4">
-    </video>
+    <canvas id="glcanvas" width="500" height="500"></canvas>
   </div>
 </div>
+
+<script src="gl-matrix.js"></script>
+<script src="webgl-demo.js"></script>
 
 
 <!-- CAST -->

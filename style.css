@@ -31,10 +31,10 @@ input, button {
 
 .page {
   position:absolute;
-  width:500px;
+  width:100%;
   display:none;
 }
-.page .content {
+.content {
   width:500px;
   height:500px;
   margin:0 auto;

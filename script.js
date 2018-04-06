@@ -37,8 +37,6 @@ $(function() {
         answerDiv.fadeOut('fast');
         homeDiv.fadeIn('slow');
 
-        attractLoopVideo[0].play();
-
       break;
 
       case _STATE_CAST:
