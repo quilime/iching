@@ -14,7 +14,7 @@ export as mp4
 <div id="home" class="page">
   <div class="content">
     <video loop id="video" autobuffer height="500" width="500">
-      <source src="attractLoop.mp4">
+      <source src="https://i.imgur.com/l6WMqqC.mp4">
     </video>
   </div>
 </div>
