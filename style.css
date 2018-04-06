@@ -3,8 +3,7 @@ body {
   color: #ddd;
   font-size:18px;
   font-family:sans-serif;
-  margin: 0 auto;
-  max-width:1000px;
+  margin:0;
   text-align:center;
 }
 
@@ -31,11 +30,15 @@ input, button {
 
 .page {
   position:absolute;
-  width:100%;
+  width:1920px;
+  height:1080px;
+  left:0;
+  top:0;
   display:none;
 }
 .content {
-  width:500px;
-  height:500px;
+  width:1080px;
+  height:1080px;
   margin:0 auto;
+  background:#000;
 }

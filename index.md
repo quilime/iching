@@ -6,7 +6,7 @@ title: Home
 <!-- ATTRACT LOOP -->
 <div id="home" class="page">
   <div class="content">
-    <canvas id="glcanvas" width="500" height="500"></canvas>
+    <canvas id="glcanvas" width="1080" height="1080"></canvas>
   </div>
 </div>
 
@@ -17,6 +17,14 @@ title: Home
 <!-- CAST -->
 <div id="cast" class="page">
   <div class="content">
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
   
     <input name="question" value="Ask a Question"/>
 
@@ -45,6 +53,13 @@ title: Home
 <!-- ANSWERS -->
 <div id="answer" class="page">
   <div class="content">
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />    
 
     <h1>Your Answer is:</h1>
     <br />
