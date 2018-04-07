@@ -307,6 +307,17 @@ function drawScene(gl, programInfo, buffers) {
       false,
       modelViewMatrix);
 
+  // gl.uniform1f('u_time', 123.0);
+  // gl.uniform1f('u_time', 1.0);
+
+  // gl.setUniform('u_time', 123.0);
+  // gl.setUniform();
+  // var now = Date();
+  // console.log(now);
+  // gl.uniform('1f', 'float', 'u_time', (now - this.timeLoad) / 1000.0);
+
+  // this.uniform('1f', 'float', 'u_time', (now - this.timeLoad) / 1000.0);
+
   {
     const offset = 0;
     const vertexCount = 4;

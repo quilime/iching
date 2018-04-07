@@ -1,0 +1,6 @@
+[submodule "Keyboard"]
+	path = Keyboard
+	url = git@github.com:Mottie/Keyboard.git
+[submodule "three.js"]
+	path = three.js
+	url = git@github.com:mrdoob/three.js.git

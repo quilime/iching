@@ -4,6 +4,83 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
+    <!-- jQuery -->
+    <script src="jquery.min.js"></script>
+
+    <!-- jQuery UI theme or Bootstrap (optional, if you create a custom theme) -->
+    <link href="jquery-ui.css" rel="stylesheet">
+    <!-- <link href="{{site.keyboard}}css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- jQuery UI position utility (optional, if you position the keyboard yourself) -->
+    <script src="jquery-ui.min.js"></script>
+
+    <!-- keyboard widget css & script -->
+    <link href="{{site.keyboard}}/css/keyboard.css" rel="stylesheet">
+    <script src="{{site.keyboard}}/js/jquery.keyboard.js"></script>
+
+    <!-- css for the preview keyset extension -->
+    <link href="{{site.keyboard}}/css/keyboard-previewkeyset.css" rel="stylesheet">
+
+    <!-- keyboard optional extensions - include ALL (includes mousewheel) -->
+    <!-- <script src="{{site.keyboard}}/js/jquery.keyboard.extension-all.js"></script> -->
+    <!-- or include individual extensions, as desired -->
+    <!--
+    <script src="{{site.keyboard}}js/jquery.mousewheel.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-altkeypopup.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-autocomplete.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-caret.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-extender.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-mobile.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-navigation.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-previewkeyset.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-scramble.js"></script>
+    <script src="{{site.keyboard}}js/jquery.keyboard.extension-typing.js"></script>
+    -->
+  
+    <script>
+
+      $('#keyboard').keyboard({
+
+        display: {
+          'bksp'   :  "\u2190",
+          'accept' : 'return',
+          'normal' : 'ABC',
+          'meta1'  : '.?123',
+          'meta2'  : '#+='
+        },
+
+        layout: 'custom',
+        customLayout: {
+          'normal': [
+            'q w e r t y u i o p {bksp}',
+            'a s d f g h j k l {enter}',
+            '{s} z x c v b n m , . {s}',
+            '{meta1} {space} {meta1} {accept}'
+          ],
+          'shift': [
+            'Q W E R T Y U I O P {bksp}',
+            'A S D F G H J K L {enter}',
+            '{s} Z X C V B N M ! ? {s}',
+            '{meta1} {space} {meta1} {accept}'
+          ],
+          'meta1': [
+            '1 2 3 4 5 6 7 8 9 0 {bksp}',
+            '- / : ; ( ) \u20ac & @ {enter}',
+            '{meta2} . , ? ! \' " {meta2}',
+            '{normal} {space} {normal} {accept}'
+          ],
+          'meta2': [
+            '[ ] { } # % ^ * + = {bksp}',
+            '_ \\ | ~ &lt; &gt; $ \u00a3 \u00a5 {enter}',
+            '{meta1} . , ? ! \' " {meta1}',
+            '{normal} {space} {normal} {accept}'
+          ]
+        }
+
+      });      
+
+    </script>
+  
     <title>
     {{ site.title }}{% if page.title %} - {{page.title}}{% endif %}
     </title>
@@ -16,9 +93,8 @@
 
     {{content}}
 
+  </body>
 
-  <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="script.js"></script>
 
-  </body>
 </html>
