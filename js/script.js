@@ -2,7 +2,7 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 5; // timeout
+var _TIMEOUT_MS   = 60000 * 3; // timeout
 
 var castCount = 0;
 var timeOut = null;
@@ -41,7 +41,7 @@ var setState = function(_state) {
         homeDiv.show();
         
         if (!webglInit) {
-          initWebgl();
+          // initWebgl();
         }
 
         scrim.fadeOut('slow');
@@ -100,6 +100,7 @@ $(function() {
   $('body').click(function(){
     clearTimeout(timeOut);
     timeOut = setTimeout(function () {
+      webglInit = false;
       setState(_STATE_HOME);
     }, _TIMEOUT_MS);
   }); 
@@ -193,7 +194,8 @@ var initWebgl = function() {
   init();
   animate();
   function init() {
-    container = document.getElementById( 'threeCanvas' );
+    container = $('#threeCanvas')[0];
+    $(container).empty();
     camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
     scene = new THREE.Scene();
     var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
@@ -210,12 +212,13 @@ var initWebgl = function() {
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
     container.appendChild( renderer.domElement );
-    onWindowResize();
-    window.addEventListener( 'resize', onWindowResize, false );
+    // onWindowResize();
+    // window.addEventListener( 'resize', onWindowResize, false );
+    renderer.setSize(1080, 1080);
   }
-  function onWindowResize( event ) {
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-  }
+  // function onWindowResize( event ) {
+    
+  // }
   function animate( timestamp ) {
     requestAnimationFrame( animate );
     uniforms.time.value = timestamp / 1000;
