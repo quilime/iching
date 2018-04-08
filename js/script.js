@@ -4,24 +4,134 @@ var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
 var _TIMEOUT_MS   = 60000 * 3; // timeout
 
+var castButtonDelay = 1000;
 var castCount = 0;
 var timeOut = null;
-var state = _STATE_HOME; // starting state
+var state = _STATE_CAST;//_STATE_HOME; // starting state
 
 var homeDiv, 
     castDiv, 
     answerDiv, 
     castButton, 
     backToCastButton,
-    askTextInput,
-    hex1, 
-    hex2;
+    askTextInput;
 
 var webglInit = false;
 
-var setHexagrams = function(_castCount) {
-    hex1.text(castCount);
-    hex2.text(castCount);
+var castHexagrams = function(_castCount) {
+
+  if (_castCount == 0) {
+    $('#hexagram_table .hex').css('visibility','hidden');
+    return;
+  }
+
+  // Cast with method-of-16 odds
+  var cast = Math.floor(Math.random() * 16);
+  var line;
+  switch (cast) {
+    case 0:
+      line = 6;
+      break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      line = 7;
+      break;
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+      line = 8;
+      break;
+    case 13:
+    case 14:
+    case 15:
+      line = 9;
+      break;
+  }
+
+
+  var hex1 = $('#hex1'+_castCount);
+  var hex1b = hex1.find('div');
+  hex1b.css('visibility','visible');
+
+  var hex2 = $('#hex2'+_castCount);
+  var hex2b = hex2.find('.break');
+  hex2b.css('visibility','visible');
+
+  var l = (line % 2 == 0 ? 0 : 1);
+  var r = (line > 7 ? 0 : 1);  
+
+  if (l == 0) { hex1b.css('visibility','visible'); } 
+  else { hex1b.css('visibility','hidden'); }
+  if (r == 0) { hex2b.css('visibility','visible'); } 
+  else { hex2b.css('visibility','hidden'); }
+
+  hex1.css('visibility','visible').hide().fadeIn("slow");
+  hex2.css('visibility','visible').hide().fadeIn("slow");
+
+
+/*
+
+function castline()
+{
+  var lines = document.frmcast.lines;
+  var line;
+
+  // Cast with method-of-16 odds
+  var cast = Math.floor(Math.random()*16);
+  switch (cast) {
+    case 0:
+      line = 6;
+      break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      line = 7;
+      break;
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+      line = 8;
+      break;
+    case 13:
+    case 14:
+    case 15:
+      line = 9;
+      break;
+  }
+
+  lines.value += line;
+
+  var leftimg  = document.getElementById("leftline"  + linenr);
+  var rightimg = document.getElementById("rightline" + linenr);
+  leftimg.src  = (line % 2 == 0 ? imgYin.src : imgYang.src);
+  rightimg.src = (line > 7 ? imgYin.src : imgYang.src);
+
+  FadeIn("leftline" + linenr);
+  FadeIn("rightline" + linenr);
+
+  if (++linenr > 6) {
+    window.setTimeout("document.frmcast.submit()", 900);
+    var castbtn = document.getElementById("castbtn");
+    castbtn.disabled = true;
+  }
+}
+
+*/  
+    // hex1.text(castCount);
+    // hex2.text(castCount);
 };
 
 var setState = function(_state) {
@@ -50,12 +160,16 @@ var setState = function(_state) {
 
     case _STATE_CAST:
       scrim.fadeIn('slow', function() {
+        
+        askTextInput.val('');
+        castCount = 0;
+
         castDiv.show();  
         answerDiv.hide();
         homeDiv.hide();
 
         castButton.show();
-        setHexagrams(0);
+        castHexagrams(0);
 
         scrim.fadeOut('slow');
         state = _STATE_CAST;
@@ -63,19 +177,21 @@ var setState = function(_state) {
       break;
 
     case _STATE_ANSWER:
-      scrim.fadeIn('slow', function() {
-        answerDiv.show();  
-        castDiv.hide();
-        homeDiv.hide();
+      answerDiv.fadeIn();
+      state = _STATE_ANSWER;
+      // scrim.fadeIn('slow', function() {
+      //   answerDiv.show();  
+      //   castDiv.hide();
+      //   homeDiv.hide();
 
-        castButton.show();
-        setHexagrams(0);
-        castCount = 0;
-        askTextInput.val('');
+      //   castButton.show();
+      //   castHexagrams(0);
+      //   castCount = 0;
+      //   askTextInput.val('');
 
-        scrim.fadeOut('slow');
-        state = _STATE_ANSWER;
-      });
+      //   scrim.fadeOut('slow');
+      //   state = _STATE_ANSWER;
+      // });
       break;
   }
 }; 
@@ -90,12 +206,10 @@ $(function() {
   scrim = $('#scrim');
   homeDiv = $('#home');
   castDiv = $('#cast');
-  answerDiv = $('#answer');
+  answerDiv = $('#answer')
   castButton = $('#castButton');
   backToCastButton = $('#backToCastButton');
   askTextInput = $('#askText');
-  hex1 = $('#hex1');
-  hex2 = $('#hex2');
 
   $('body').click(function(){
     clearTimeout(timeOut);
@@ -120,12 +234,12 @@ $(function() {
       castCount++;
     }
 
-    setHexagrams(castCount);
+    castHexagrams(castCount);
 
     if (castCount == 6) {
       castButton.fadeOut();
       castButton.prop("disabled", true);
-      castButton.fadeOut('slow', function() {
+      castButton.delay(castButtonDelay).fadeOut('slow', function() {
         setState(_STATE_ANSWER);
         castButton.prop("disabled", false);
       });

@@ -113,13 +113,9 @@
                 gl_FragColor = vec4(color, 1.0);
             }
 
-
-
-
         </script>           
       </div>
     </div>
-
 
 
     <!-- CAST -->
@@ -134,38 +130,50 @@
         <br />
         <br />
       
-        <input id="askText" type="text" onfocus="blur();" placeholder=" Ask a Question...">
+        <input id="askText" type="text" onfocus="blur();" placeholder="What is your Question? (optional)">
 
+        <br />
+        <br />
         <br />
         <br />
         <br />
 
         <table id="hexagram_table">
         <tr>
-        <td id="hex1">0</td>
-        <td>changing to</td>
-        <td id="hex2">0</td>
+        
+        <td id="hex1">
+            <div class="hex" id="hex16"><div class="break"></div></div>
+            <div class="hex" id="hex15"><div class="break"></div></div>
+            <div class="hex" id="hex14"><div class="break"></div></div>
+            <div class="hex" id="hex13"><div class="break"></div></div>
+            <div class="hex" id="hex12"><div class="break"></div></div>
+            <div class="hex" id="hex11"><div class="break"></div></div>
+        </td>
+
+        <td>changing&nbsp;to</td>
+
+        <td id="hex2">
+            <div class="hex" id="hex26"><div class="break"></div></div>
+            <div class="hex" id="hex25"><div class="break"></div></div>
+            <div class="hex" id="hex24"><div class="break"></div></div>
+            <div class="hex" id="hex23"><div class="break"></div></div>
+            <div class="hex" id="hex22"><div class="break"></div></div>
+            <div class="hex" id="hex21"><div class="break"></div></div>
+        </td>
+
         </tr>
         </table>
 
         <br />
         <br />
+        <br />
+        <br />
+        <br />
 
         <button class="castButton" id="castButton">CAST</button>
 
-      </div>
-    </div>
-
-
-    <!-- ANSWERS -->
-    <div id="answer" class="page">
-      <div class="content">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />    
-
+        <div id="answer" style="display:none;">
+        
         <h1>Your Answer is:</h1>
         <br />
         <br />
@@ -173,12 +181,40 @@
 
         <h2>dfsgadsg dsfg dsfg dfs</h2>
 
+        <p>Et qui cupiditate qui eveniet consequuntur itaque. Architecto corporis reiciendis officia velit expedita earum vel repudiandae. Cupiditate recusandae quis quos odio quis et alias.
+        <p>
+
+<p>
+Odio architecto eum et eligendi doloremque. Eligendi alias rerum quia dolor ad. Est et cum fugit odio dolorem. Pariatur voluptatibus perspiciatis architecto ab. Et velit mollitia et totam ea optio. Qui modi quaerat praesentium rerum delectus.
+</p>
+
+<p>
+Aliquid dolores dicta omnis vel in labore. Autem nisi voluptatem ducimus quidem. Ut ut sit at. Itaque et quas numquam pariatur tempore est. Doloribus tenetur iusto et unde sed voluptas culpa ullam. Atque qui temporibus est quas nam dolores.
+</p>
+
+<p>
+In excepturi quaerat ratione. Nobis ipsam voluptatem sapiente veritatis enim. Praesentium omnis aut assumenda voluptatem quia corrupti temporibus.
+</p>
+
+<p>
+Minus sint odio nobis est possimus. Quo velit laudantium ut distinctio delectus ut. Est pariatur voluptate nulla.
+</p>
+
         <br />
         <br />
         <br />
         <br />
 
         <button class="castButton" id="backToCastButton">CAST</button>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        </div>
 
       </div>
     </div>
