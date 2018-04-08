@@ -1,5 +1,5 @@
 body {
-  background: #000;
+  background: #333;
   color: #ddd;
   font-size:18px;
   font-family:sans-serif;
@@ -10,8 +10,11 @@ body {
 #container {
   width:1080px;
   height:1080px;
-  margin: 0 auto;
+  margin-left: 420px;
   background:#111;
+  position:absolute;
+  top:0;
+  left:0;
 }
 
 a {
@@ -37,7 +40,7 @@ input, button {
 }
 
 #scrim {
-  background:#f0f;
+  background:#000;
   width:100%;
   height:100%;
   position:absolute;

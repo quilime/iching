@@ -2,7 +2,7 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 3; // timeout
+var _TIMEOUT_MS   = 5000; //60000 * 3; // timeout
 
 var castCount = 0;
 var timeOut = null;
@@ -25,38 +25,53 @@ var setHexagrams = function(_castCount) {
 };
 
 var setState = function(_state) {
+
+  console.log("switching to state: " + _state);
+
   switch(_state) {
+
     case _STATE_HOME:
       state = _STATE_HOME;
       scrim.fadeIn('slow', function() {
         castDiv.hide();  
         answerDiv.hide();
         homeDiv.show();
+        
         if (!webglInit) {
           initWebgl();
         }
+
         scrim.fadeOut('slow');
       });
-      
       break;
 
     case _STATE_CAST:
-      homeDiv.fadeOut('fast');
-      answerDiv.fadeOut('fast');
-      castButton.show();
-      setHexagrams(0);
-      castDiv.fadeIn('slow', function() {
+      scrim.fadeIn('slow', function() {
+        castDiv.show();  
+        answerDiv.hide();
+        homeDiv.hide();
+
+        castButton.show();
+        setHexagrams(0);
+
+        scrim.fadeOut('slow');
         state = _STATE_CAST;
       });
       break;
 
     case _STATE_ANSWER:
-      homeDiv.fadeOut('fast');
-      castDiv.fadeOut('fast');
-      askTextInput.val('');
-      answerDiv.fadeIn('slow', function() {
-        state = _STATE_ANSWER;
+      scrim.fadeIn('slow', function() {
+        answerDiv.show();  
+        castDiv.hide();
+        homeDiv.hide();
+
+        castButton.show();
+        setHexagrams(0);
         castCount = 0;
+        askTextInput.val('');
+
+        scrim.fadeOut('slow');
+        state = _STATE_ANSWER;
       });
       break;
   }
@@ -64,46 +79,7 @@ var setState = function(_state) {
 
 
 
-var initWebgl = function() {
 
-  webglInit = true;
-
-  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-  var container;
-  var camera, scene, renderer;
-  var uniforms;
-  init();
-  animate();
-  function init() {
-    container = document.getElementById( 'threeCanvas' );
-    camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
-    scene = new THREE.Scene();
-    var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
-    uniforms = {
-      time: { value: 1.0 }
-    };
-    var material = new THREE.ShaderMaterial( {
-      uniforms: uniforms,
-      vertexShader: document.getElementById( 'vertexShader' ).textContent,
-      fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-    } );
-    var mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh );
-    renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio( window.devicePixelRatio );
-    container.appendChild( renderer.domElement );
-    onWindowResize();
-    window.addEventListener( 'resize', onWindowResize, false );
-  }
-  function onWindowResize( event ) {
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-  }
-  function animate( timestamp ) {
-    requestAnimationFrame( animate );
-    uniforms.time.value = timestamp / 1000;
-    renderer.render( scene, camera );
-  }
-};
 
 
 $(function() {
@@ -145,7 +121,7 @@ $(function() {
     if (castCount == 6) {
       castButton.fadeOut();
       castButton.prop("disabled", true);
-      castDiv.delay( 500 ).fadeOut('slow', function() {
+      castButton.fadeOut('slow', function() {
         setState(_STATE_ANSWER);
         castButton.prop("disabled", false);
       });
@@ -199,3 +175,47 @@ $(function() {
 
   setState(state);
 });
+
+
+
+
+var initWebgl = function() {
+
+  webglInit = true;
+
+  if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+  var container;
+  var camera, scene, renderer;
+  var uniforms;
+  init();
+  animate();
+  function init() {
+    container = document.getElementById( 'threeCanvas' );
+    camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
+    scene = new THREE.Scene();
+    var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+    uniforms = {
+      time: { value: 1.0 }
+    };
+    var material = new THREE.ShaderMaterial( {
+      uniforms: uniforms,
+      vertexShader: document.getElementById( 'vertexShader' ).textContent,
+      fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+    } );
+    var mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio( window.devicePixelRatio );
+    container.appendChild( renderer.domElement );
+    onWindowResize();
+    window.addEventListener( 'resize', onWindowResize, false );
+  }
+  function onWindowResize( event ) {
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+  }
+  function animate( timestamp ) {
+    requestAnimationFrame( animate );
+    uniforms.time.value = timestamp / 1000;
+    renderer.render( scene, camera );
+  }
+};
