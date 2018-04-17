@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgl - shader [Monjori]</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+      #threeCanvas {
+          background-color: #fff;
+          width: 500px;
+          height: 500px;
+          position: static; /* fixed or static */
+        margin:100px;
+      }      
+    </style>
+  </head>
+  <body>
+
+    <div id="threeCanvas" />
+
+    <script src="three.js-master/build/three.js"></script>
+    <script src="three.js-master/examples/js/Detector.js"></script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4( position, 1.0 );
+      }
+    </script>
+
+<!--     <script id="fragmentShader" type="x-shader/x-fragment">
+        varying vec2 vUv;
+        uniform float time;
+
+        vec2 random2(vec2 st){
+          st = vec2( dot(st,vec2(127.1,311.7)),
+                     dot(st,vec2(269.5,183.3)) );
+          return -1.0 + 2.0 * fract(sin(st)*43758.5453123);
+        }
+
+        void main() {
+          vec2 position = vUv;
+
+          float color = 0.0;
+
+          color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+          color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+          color += sin( position.x * sin( time / 5.0 ) * 10.0 )  + sin( position.y * sin( time / 35.0 ) * 80.0 );
+          color *= sin( time / 10.0 ) * 0.5;
+
+          gl_FragColor = vec4( vec3( sin( color + time / 3.0 ) * 0.75 ) ), 1.0 );
+        }
+    </script> -->
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+      uniform float time;
+      varying vec2 vUv;
+
+      void main( void ) {
+        vec2 position = - 1.0 + 2.0 * vUv;
+        float red = abs( sin( position.x * position.y + time / 5.0 ) );
+        float green = abs( sin( position.x * position.y + time / 4.0 ) );
+        float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+        gl_FragColor = vec4( red, green, blue, 1.0 );
+      }
+    </script>    
+
+    <script>
+      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+      var container;
+      var camera, scene, renderer;
+      var uniforms;
+      init();
+      animate();
+      function init() {
+        container = document.getElementById( 'threeCanvas' );
+        camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
+        scene = new THREE.Scene();
+        var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+        uniforms = {
+          time: { value: 1.0 }
+        };
+        var material = new THREE.ShaderMaterial( {
+          uniforms: uniforms,
+          vertexShader: document.getElementById( 'vertexShader' ).textContent,
+          fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+        } );
+        var mesh = new THREE.Mesh( geometry, material );
+        scene.add( mesh );
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio( window.devicePixelRatio );
+        container.appendChild( renderer.domElement );
+        onWindowResize();
+        window.addEventListener( 'resize', onWindowResize, false );
+      }
+      function onWindowResize( event ) {
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+      }
+      //
+      function animate( timestamp ) {
+        requestAnimationFrame( animate );
+        uniforms.time.value = timestamp / 1000;
+        renderer.render( scene, camera );
+      }
+    </script>
+
+  </body>
+</html>

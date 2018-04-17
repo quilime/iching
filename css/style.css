@@ -51,7 +51,17 @@ input, button {
 }
 
 #answer {
-margin:0 100px;
+  margin:0 100px;
+}
+#answer ol, #answer li {
+  text-align:left;
+}
+#answer li {
+  margin:0.5em auto;
+}
+
+#isChangingTo {
+  margin:4em auto;
 }
 
 #container {
@@ -59,7 +69,7 @@ margin:0 100px;
   height:1080px;
   position:absolute;
   top:0;
-  left:420px;
+  left:auto;
   background:#111;
 }
 
@@ -99,8 +109,12 @@ margin:0 100px;
   padding:1em;
 }
 
+td#changingto {
+  min-width:200px;
+}
+
 #hex1 div, #hex2 div {
-  width:300px;
+  width:200px;
   margin:30px;
   height:20px;
   background:#fff;

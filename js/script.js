@@ -8,6 +8,9 @@ var castButtonDelay = 1000;
 var castCount = 0;
 var timeOut = null;
 var state = _STATE_CAST;//_STATE_HOME; // starting state
+var data = [];
+var lData = [];
+var rData = [];
 
 var homeDiv, 
     castDiv, 
@@ -21,6 +24,8 @@ var webglInit = false;
 var castHexagrams = function(_castCount) {
 
   if (_castCount == 0) {
+    lData = data; 
+    rData = data;
     $('#hexagram_table .hex').css('visibility','hidden');
     return;
   }
@@ -67,6 +72,15 @@ var castHexagrams = function(_castCount) {
   var l = (line % 2 == 0 ? 0 : 1);
   var r = (line > 7 ? 0 : 1);  
 
+  var filterData = (dataArr, s) => {
+    return dataArr.filter(function (i) {
+      return i.id[_castCount-1] == s;
+    });
+  };
+
+  lData = filterData(lData, l);
+  rData = filterData(rData, r);
+
   if (l == 0) { hex1b.css('visibility','visible'); } 
   else { hex1b.css('visibility','hidden'); }
   if (r == 0) { hex2b.css('visibility','visible'); } 
@@ -74,64 +88,6 @@ var castHexagrams = function(_castCount) {
 
   hex1.css('visibility','visible').hide().fadeIn("slow");
   hex2.css('visibility','visible').hide().fadeIn("slow");
-
-
-/*
-
-function castline()
-{
-  var lines = document.frmcast.lines;
-  var line;
-
-  // Cast with method-of-16 odds
-  var cast = Math.floor(Math.random()*16);
-  switch (cast) {
-    case 0:
-      line = 6;
-      break;
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-      line = 7;
-      break;
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 10:
-    case 11:
-    case 12:
-      line = 8;
-      break;
-    case 13:
-    case 14:
-    case 15:
-      line = 9;
-      break;
-  }
-
-  lines.value += line;
-
-  var leftimg  = document.getElementById("leftline"  + linenr);
-  var rightimg = document.getElementById("rightline" + linenr);
-  leftimg.src  = (line % 2 == 0 ? imgYin.src : imgYang.src);
-  rightimg.src = (line > 7 ? imgYin.src : imgYang.src);
-
-  FadeIn("leftline" + linenr);
-  FadeIn("rightline" + linenr);
-
-  if (++linenr > 6) {
-    window.setTimeout("document.frmcast.submit()", 900);
-    var castbtn = document.getElementById("castbtn");
-    castbtn.disabled = true;
-  }
-}
-
-*/  
-    // hex1.text(castCount);
-    // hex2.text(castCount);
 };
 
 var setState = function(_state) {
@@ -177,8 +133,25 @@ var setState = function(_state) {
       break;
 
     case _STATE_ANSWER:
-      answerDiv.fadeIn();
       state = _STATE_ANSWER;
+
+      var populateAnswer = (_id, _data) => {
+        var el = $(_id);
+        console.log(_data);
+        el.find('h1').text(_data.name);
+        el.find('h3').text(_data.desc);
+        var ol = el.find('ol');
+        ol.empty();
+        for (var line in _data.reading) {
+          ol.append('<li>' + _data.reading[line] + '</li>');
+        }
+      };
+
+      populateAnswer('#ans1', lData[0]);
+      populateAnswer('#ans2', rData[0]);
+
+      answerDiv.fadeIn();
+
       // scrim.fadeIn('slow', function() {
       //   answerDiv.show();  
       //   castDiv.hide();
@@ -263,12 +236,12 @@ $(function() {
               '1 2 3 4 5 6 7 8 9 0 {bksp}',
               '- / : ; ( ) \u20ac & @',
               ' ! \' " . , ?',
-              '{normal} {space} {accept}'], //  {meta2} 
+              '{normal} {space} {accept}'], // {meta2} 
           'meta2': [
               '[ ] { } # % ^ * + = {bksp}',
               '_ \\ | ~ < > $ \u00a3 \u00a5',
               '. , \' " ! . , ?',
-              '{normal} {space} {accept}'] //  {meta1} 
+              '{normal} {space} {accept}'] // {meta1} 
       },
       display: {
           'bksp'   : '\u2190',
@@ -291,7 +264,14 @@ $(function() {
       }
   });  
 
-  setState(state);
+  // 
+
+
+    $.getJSON('data.json', function(_data) {
+      data = _data.items;
+      setState(_STATE_CAST);
+    });
+
 });
 
 
