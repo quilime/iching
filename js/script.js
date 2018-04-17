@@ -139,7 +139,7 @@ var setState = function(_state) {
         var el = $(_id);
         console.log(_data);
         el.find('h1').text(_data.name);
-        // el.find('h2').html(_data.hex[0] + '<br />' + _data.hex[1]);
+        el.find('h2').html(_data.hex[0] + '&#xFE0E;<br />' + _data.hex[1] + '&#xFE0E;');
         el.find('h3').text(_data.desc);
         var ol = el.find('ol');
         ol.empty();
