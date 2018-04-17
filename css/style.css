@@ -60,8 +60,10 @@ input, button {
   margin:0.5em auto;
 }
 #answer h2.hexicons {
+  font-family:serif !important;
   margin:0;
   padding:0;
+  font-family: Arial;
   line-height:0.85em;
 }
 
