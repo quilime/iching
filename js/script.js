@@ -151,20 +151,6 @@ var setState = function(_state) {
       populateAnswer('#ans2', rData[0]);
 
       answerDiv.fadeIn();
-
-      // scrim.fadeIn('slow', function() {
-      //   answerDiv.show();  
-      //   castDiv.hide();
-      //   homeDiv.hide();
-
-      //   castButton.show();
-      //   castHexagrams(0);
-      //   castCount = 0;
-      //   askTextInput.val('');
-
-      //   scrim.fadeOut('slow');
-      //   state = _STATE_ANSWER;
-      // });
       break;
   }
 }; 
@@ -269,7 +255,7 @@ $(function() {
 
     $.getJSON('data.json', function(_data) {
       data = _data.items;
-      setState(_STATE_CAST);
+      setState(_STATE_HOME);
     });
 
 });
