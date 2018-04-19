@@ -34,86 +34,12 @@
 
         <div id="askCopy">Ask the Question</div>
 
-        <div id="threeCanvas"></div>
+<!--         <video autoplay autobuffer loop id="attractloop" width="1080" height="1080">
+            <source src="attractloop.mp4">
+        </video> -->
+    
+    <img src="attractloopPoster.png" />
 
-        <script src="three-js/three.min.js"></script>
-        <script src="three-js/Detector.js"></script>
-
-        <script id="vertexShader" type="x-shader/x-vertex">
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = vec4( position, 1.0 );
-          }
-        </script>
-
-        <script id="fragmentShader" type="x-shader/x-fragment">
-
-            // via https://thebookofshaders.com/12/
-
-            varying vec2 vUv;
-            uniform float time;
-
-            #define TWO_PI  6.283
-
-            float speed = 0.2;
-
-            vec2 random2(vec2 p) {
-                return fract(sin(vec2(dot(p,vec2(127.1, 111.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
-            }
-
-            float map(float value, float beforeMin, float beforeMax, float afterMin, float afterMax) {
-                return afterMin + (afterMax - afterMin) * ((value - beforeMin) / (beforeMax - beforeMin));
-            }
-
-            void main() {
-
-                vec2 resolution = vec2(5., 5.);
-
-                vec2 st = - 1.0 + 2.0 * vUv;
-                st.x *= resolution.x / resolution.y;
-                vec3 color = vec3(1);
-                
-                // Scale
-                st *= 1.0;
-                
-                vec2 i_st = floor(st);
-                vec2 f_st = fract(st);
-
-                float m_dist = .50;
-                
-                for (int j = -1; j <= 1; j++) {
-                    for (int i = -1; i <= 1; i++) {
-                        // Neighbor place in the grid
-                        vec2 neighbor = vec2(float(i), float(j));
-                        
-                        // Random position from current + neighbor place in the grid
-                        vec2 offset = random2(i_st + neighbor);
-
-                        // Animate the offset
-                        //offset = 0.5 + 0.5 * sin(time + TWO_PI * offset);
-                        offset = vec2(
-                            map(sin(time * speed + TWO_PI * offset).x, -1.0, 1.0, 0.0, 1.0),
-                            map(sin(time * speed + TWO_PI * offset).y, -1.0, 1.0, 0.0, 1.0)
-                        );
-                        
-                        // Position of the cell             
-                        vec2 pos = neighbor + offset - f_st;
-                        
-                        // Cell distance
-                        float dist = length(pos);
-
-                        // Metaball
-                        m_dist = min(m_dist, m_dist * dist);
-                    }
-                }
-
-                color -= step(0.04, m_dist);
-                
-                gl_FragColor = vec4(color, 1.0);
-            }
-
-        </script>           
       </div>
     </div>
 
@@ -171,6 +97,10 @@
         <br />
 
         <button class="castButton" id="castButton">CAST</button>
+
+        <br /><br />
+
+        <!-- <button class="castButton" id="goHomeButton">HOME</button> -->
 
         <div id="answer" style="display:none;">
         

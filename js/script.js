@@ -101,15 +101,13 @@ var setState = function(_state) {
     case _STATE_HOME:
       state = _STATE_HOME;
 
+      // $('#attractloop')[0].play();
+
       scrim.fadeIn('slow', function() {
+        // $('#attractloop')[0].play();
         castDiv.hide();  
         answerDiv.hide();
         homeDiv.show();
-        
-        if (!webglInit) {
-          // initWebgl();
-        }
-
         scrim.fadeOut('slow');
       });
       break;
@@ -168,6 +166,7 @@ $(function() {
   castDiv = $('#cast');
   answerDiv = $('#answer')
   castButton = $('#castButton');
+  goHomeButton = $('#goHomeButton');
   backToCastButton = $('#backToCastButton');
   askTextInput = $('#askText');
 
@@ -186,6 +185,11 @@ $(function() {
   backToCastButton.click(function() {
     setState(_STATE_CAST);
   });
+
+  goHomeButton.click(function() {
+
+    setState(_STATE_HOME);
+  });  
 
   castButton.click(function() {
     state = _STATE_CAST;
@@ -258,6 +262,10 @@ $(function() {
       data = _data.items;
       setState(_STATE_HOME);
     });
+
+    // if (!webglInit) {
+    //   initWebgl();
+    // }    
 
 });
 

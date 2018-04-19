@@ -67,7 +67,7 @@ input, button {
   margin:0;
   padding:0.5em;
   font-family: Arial;
-  line-height:0.85em;
+  line-height:.925em;
 }
 
 #isChangingTo {
@@ -142,4 +142,8 @@ td#changingto {
   z-index:100;
   color:#f0f;
   visibility: hidden;
+}
+
+video::-internal-media-controls-overlay-cast-button {
+    display: none;
 }
