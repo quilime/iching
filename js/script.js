@@ -2,7 +2,7 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 10; // timeout
+var _TIMEOUT_MS   = 60000 * 0.5; // timeout
 
 var castButtonDelay = 1000;
 var castCount = 0;
@@ -92,16 +92,12 @@ var castHexagrams = function(_castCount) {
 
 var setState = function(_state) {
 
-  // console.log("switching to state: " + _state);
-
   $('#askText_keyboard').hide();
 
   switch(_state) {
 
     case _STATE_HOME:
       state = _STATE_HOME;
-
-      // $('#attractloop')[0].play();
 
       scrim.fadeIn('slow', function() {
         // $('#attractloop')[0].play();
