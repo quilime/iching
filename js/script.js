@@ -2,12 +2,12 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 0.5; // timeout
+var _TIMEOUT_MS   = 60000 * 10; // timeout
 
 var castButtonDelay = 1000;
 var castCount = 0;
 var timeOut = null;
-var state = _STATE_CAST;//_STATE_HOME; // starting state
+var state = _STATE_HOME;
 var data = [];
 var lData = [];
 var rData = [];
