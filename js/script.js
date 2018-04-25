@@ -26,8 +26,13 @@ var castHexagrams = function(_castCount) {
   if (_castCount == 0) {
     lData = data; 
     rData = data;
+    $('#changingto div').hide();
     $('#hexagram_table .hex').css('visibility','hidden');
     return;
+  }
+
+  if (_castCount > 0) {
+    $('#changingto div').fadeIn();
   }
 
   // Cast with method-of-16 odds
