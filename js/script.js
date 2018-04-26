@@ -2,7 +2,7 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 10; // timeout
+var _TIMEOUT_MS   = 60000 * 1; // timeout
 
 var castButtonDelay = 1000;
 var castCount = 0;
@@ -11,13 +11,15 @@ var state = _STATE_HOME;
 var data = [];
 var lData = [];
 var rData = [];
+var rotation = 0; // 0:0, 1:90, 2:180, 3:270 
 
 var homeDiv, 
     castDiv, 
     answerDiv, 
     castButton, 
     backToCastButton,
-    askTextInput;
+    askTextInput,
+    rotateButton;
 
 var webglInit = false;
 
@@ -95,6 +97,37 @@ var castHexagrams = function(_castCount) {
   hex2.css('visibility','visible').hide().fadeIn("slow");
 };
 
+
+var rotateView = function(_rotate) {
+
+  let container = $('#container');
+  let rotateButton = $('#rotateButton');
+
+  scrim.fadeIn('slow', function() {
+    switch (_rotate) {
+      case 0:
+        container.attr('class', '');
+        rotateButton.attr('class', '');
+        break;
+      case 1:
+        container.attr('class', 'rot90');
+        rotateButton.attr('class', 'rot90');
+        break;
+      case 2:
+        container.attr('class', 'rot180');
+        rotateButton.attr('class', 'rot180');
+        break;
+      case 3:
+        container.attr('class', 'rot270');
+        rotateButton.attr('class', 'rot270');
+        break;
+    }
+  
+      scrim.fadeOut('slow');
+  });
+
+}
+
 var setState = function(_state) {
 
   $('#askText_keyboard').hide();
@@ -106,6 +139,7 @@ var setState = function(_state) {
 
       scrim.fadeIn('slow', function() {
         // $('#attractloop')[0].play();
+        rotateButton.hide();
         castDiv.hide();  
         answerDiv.hide();
         homeDiv.show();
@@ -123,6 +157,7 @@ var setState = function(_state) {
         answerDiv.hide();
         homeDiv.hide();
 
+        rotateButton.show();
         castButton.show();
         castHexagrams(0);
 
@@ -170,6 +205,7 @@ $(function() {
   goHomeButton = $('#goHomeButton');
   backToCastButton = $('#backToCastButton');
   askTextInput = $('#askText');
+  rotateButton = $('#rotateButton');
 
   $('body').click(function(){
     clearTimeout(timeOut);
@@ -188,9 +224,14 @@ $(function() {
   });
 
   goHomeButton.click(function() {
-
     setState(_STATE_HOME);
-  });  
+  }); 
+
+  rotateButton.click(function() {
+    rotation++;
+    if (rotation > 3) rotation = 0;
+    rotateView(rotation);
+  }); 
 
   castButton.click(function() {
     state = _STATE_CAST;
@@ -214,45 +255,69 @@ $(function() {
   askTextInput.keyboard({ 
       layout: 'custom',
       customLayout: {
-          'normal': [
-              'q w e r t y u i o p {bksp}',
-              'a s d f g h j k l',
-              'z x c v b n m , . ?',
-              '{s} {space} {accept}'],
-          'shift': [
-              'Q W E R T Y U I O P {bksp}',
-              'A S D F G H J K L',
-              'Z X C V B N M , . ?',
-              '{s} {space} {accept}'], // {space} 
-          'meta1': [
-              '1 2 3 4 5 6 7 8 9 0 {bksp}',
-              '- / : ; ( ) \u20ac & @',
-              ' ! \' " . , ?',
-              '{normal} {space} {accept}'], // {meta2} 
-          'meta2': [
-              '[ ] { } # % ^ * + = {bksp}',
-              '_ \\ | ~ < > $ \u00a3 \u00a5',
-              '. , \' " ! . , ?',
-              '{normal} {space} {accept}'] // {meta1} 
+        'normal': [
+            'q w e r t y u i o p {bksp}',
+            'a s d f g h j k l',
+            'z x c v b n m , . ?',
+            '{s} {space} {accept}'],
+        'shift': [
+            'Q W E R T Y U I O P {bksp}',
+            'A S D F G H J K L',
+            'Z X C V B N M , . ?',
+            '{s} {space} {accept}'], // {space} 
+        'meta1': [
+            '1 2 3 4 5 6 7 8 9 0 {bksp}',
+            '- / : ; ( ) \u20ac & @',
+            ' ! \' " . , ?',
+            '{normal} {space} {accept}'], // {meta2} 
+        'meta2': [
+            '[ ] { } # % ^ * + = {bksp}',
+            '_ \\ | ~ < > $ \u00a3 \u00a5',
+            '. , \' " ! . , ?',
+            '{normal} {space} {accept}'] // {meta1} 
       },
       display: {
-          'bksp'   : '\u2190',
-          'accept' : 'accept',
-          'normal' : 'ABC',
-          'shift'  : '\u21d1',
-          'meta1'  : '123',
-          'meta2'  : '#+='
+        'bksp'   : '\u2190',
+        'accept' : 'accept',
+        'normal' : 'ABC',
+        'shift'  : '\u21d1',
+        'meta1'  : '123',
+        'meta2'  : '#+='
       },
       usePreview : false,
       position : {
-          // optional - null (attach to input/textarea) or a jQuery object
-          // (attach elsewhere)
-          of : null,
-          my : 'center top',
-          at : 'center top',
-          // used when "usePreview" is false
-          // (centers keyboard at bottom of the input/textarea)
-          at2: 'center bottom'
+        // optional - null (attach to input/textarea) or a jQuery object
+        // (attach elsewhere)
+        of : null,
+        my : 'center top',
+        at : 'center top',
+        // used when "usePreview" is false
+        // (centers keyboard at bottom of the input/textarea)
+        at2: 'center bottom'
+      },
+      beforeVisible : function(e, keyboard, el) {
+        let k = keyboard.$keyboard;
+
+        k.removeClass('rot90 rot180 rot270');
+
+        switch(rotation) {
+
+          case 0:
+            break;
+
+          case 1:
+            k.addClass('rot90');
+            break;
+
+          case 2:
+            k.addClass('rot180');
+            break;
+
+          case 3:
+            k.addClass('rot270');
+            break;
+        }
+
       }
   });  
 
