@@ -138,6 +138,17 @@ var setState = function(_state) {
       state = _STATE_HOME;
 
       scrim.fadeIn('slow', function() {
+
+        var audio = $('#ambientsound');
+        audio[0].pause();
+        audio.animate({ volume: 0 }, {
+          duration: 0,
+          complete: function(){
+            audio[0].play();
+            audio.animate({ volume: 1 }, 2000);    
+          }
+        });
+
         // $('#attractloop')[0].play();
         rotateButton.hide();
         castDiv.hide();  
@@ -149,6 +160,14 @@ var setState = function(_state) {
 
     case _STATE_CAST:
       scrim.fadeIn('slow', function() {
+
+        var audio = $('#ambientsound');
+        audio[0].play();        
+        audio.animate({ volume: 0 }, {
+          duration: 2000, 
+          complete: function() {
+            audio[0].pause();
+          }});
         
         askTextInput.val('');
         castCount = 0;
@@ -221,6 +240,9 @@ $(function() {
 
   backToCastButton.click(function() {
     setState(_STATE_CAST);
+    var audio = $('#tapsound');
+    audio.currentTime = 0;
+    audio[0].play();    
   });
 
   goHomeButton.click(function() {
@@ -234,6 +256,10 @@ $(function() {
   }); 
 
   castButton.click(function() {
+
+    var audio = $('#tapsound');
+    audio[0].play();  
+
     state = _STATE_CAST;
 
     if (castCount < 6) {
@@ -250,6 +276,12 @@ $(function() {
         castButton.prop("disabled", false);
       });
     }
+  });
+
+  askTextInput.change(function(){ 
+    var audio = $('#tapsound');
+    audio.currentTime = 0;
+    audio[0].play();
   });
 
   askTextInput.keyboard({ 
@@ -294,6 +326,11 @@ $(function() {
         // used when "usePreview" is false
         // (centers keyboard at bottom of the input/textarea)
         at2: 'center bottom'
+      },
+      change : function(e, keyboard, el) {
+        var audio = $('#tapsound');
+        audio.currentTime = 0;
+        audio[0].play();
       },
       beforeVisible : function(e, keyboard, el) {
         let k = keyboard.$keyboard;
