@@ -2,7 +2,7 @@
 var _STATE_HOME   = 'HOME';
 var _STATE_CAST   = 'CAST';
 var _STATE_ANSWER = 'ANSWER';
-var _TIMEOUT_MS   = 60000 * 1; // timeout
+var _TIMEOUT_MS   = 60000 * 5; // timeout
 
 var castButtonDelay = 1000;
 var castCount = 0;
